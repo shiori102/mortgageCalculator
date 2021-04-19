@@ -1,0 +1,52 @@
+.card {
+    padding: 10px;
+}
+
+body {
+    padding-top: 35px;
+}
+
+.center {
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+h3 {
+    font-style: italic;
+    font-size: 35px;
+}
+
+h1 {
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+.monthlyPayment {
+    font-weight: bolder;
+}
+
+.block {
+    padding-bottom: 50px;
+}
+
+p {
+    font-size: 25px;
+}
+
+.block2 {
+    padding: 20px;
+}
+
+.navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.navbar {
+    min-height: 100px;
+}
+
+.nav-item {
+    font-size: 25px;
+}
