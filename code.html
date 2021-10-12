@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/prismOkaidia.css">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
     <header>
         <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">Mortgage Calculator</a>
+            <a class="navbar-brand" href="#"><img src="/img/calculator.png">  Mortgage Calculator</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,7 +43,7 @@
                         <a class="nav-link active" href="code.html">See The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/shiori102/superDogEvents">Get the
+                        <a class="nav-link" href="https://github.com/shiori102/mortgageCalculator">Get the
                             Code</a>
                     </li>
                     <li class="nav-item">
@@ -54,16 +55,80 @@
     </header>
 
     <!-- Begin page content -->
-    <main role="main" class="container">
-        <div class="row mt-5">
-            <div class="col-7 pt-5">
-                
-            </div>
-           
+     <div class="container mt-5">
+         <div class="row pt-5 ">
+             <div class="col-12 line-numbers border border-dark rounded">
+                 <h3>Here's the Code:</h3>
+                 <pre><code class="language-javascript">document.getElementById("calculateBtn").onclick = function () {
+    let amount = document.getElementById("loanAmount").value;
+    let months = document.getElementById("months").value;
+    let rate = document.getElementById("rate").value;
+
+    //parseInt the loan amount bc it would read NaN(not a number)
+    amount = parseInt(amount);
+    document.getElementById("principalAmount").innerHTML = `$${amount}`;
+
+    //created the first formula of total monthly payment (use math.pow to create exponent)
+    //toFixed(2) displays the number to 2 decimal places
+    let rowData = "";
+    let totalMonthlyPayment = (amount) * (rate / 1200) / (1 - (Math.pow(1 + rate / 1200, -months)));
+    totalMonthlyPayment = totalMonthlyPayment;
+    document.getElementById("getMonthlyPayment").innerHTML = `$${totalMonthlyPayment}`;
+    let totalLoanAmount = months * totalMonthlyPayment;
+
+    totalLoanAmount = totalLoanAmount;
+
+    //adding the dollar sign to the numbers
+    document.getElementById("totalCost").innerHTML = `$${totalLoanAmount}`;
 
 
+    let interest = totalLoanAmount - amount;
+    interest = interest;
+    document.getElementById("totalInterest").innerHTML = `$${interest}`;
 
-    </main>
+    let interestPayment = totalLoanAmount * rate / 1200;
+    let principalPayment = totalMonthlyPayment - interestPayment;
+    let remainingBalance = totalLoanAmount - totalMonthlyPayment;
+
+
+    //adds the content to the table
+    const dataTemplate = document.getElementById("data-template");
+    const resultsBody = document.getElementById("resultsBody");
+
+    //currentBalance variable and interestSum is created to allow the number to change throughout the table
+    resultsBody.innerHTML = "";
+    let currentBalance = amount;
+    let interestSum = 0;
+
+    //for loop to reiterate over the number of months entered in the form
+    //i=1 bc thats when the table should start
+    //calculations and formulas are created to make sure that the numbers are changing after every month
+    for (let i = 1; i <= months; i++) {
+        const dataRow = document.importNode(dataTemplate.content, true);
+        let interestPayment = currentBalance * rate / 1200;
+        let principalPayment = totalMonthlyPayment - interestPayment;
+        let remainingBalance = currentBalance - principalPayment;
+        currentBalance = currentBalance - principalPayment;
+        interestSum = interestPayment + interestSum;
+
+        //adding the table rows to the table by using the dataRow.getElementById and referring back the the ids named in the html
+        dataRow.getElementById("month").textContent = i;
+        dataRow.getElementById("payment").textContent = totalMonthlyPayment;
+        dataRow.getElementById("principal").textContent = principalPayment.toFixed(2);
+        dataRow.getElementById("interest").textContent = interestPayment.toFixed(2);
+        dataRow.getElementById("totalInterest").textContent = interestSum.toFixed(2);
+        dataRow.getElementById("balance").textContent = remainingBalance.toFixed(2);
+
+        resultsBody.appendChild(dataRow);
+
+    }
+
+}
+</code></pre>
+
+             </div>
+         </div>
+     </div>
 
 
 
@@ -80,6 +145,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="/js/site.js"></script>
+    <script src="/js/prismOkaidia.js"></script>
 </body>
 
 </html>
